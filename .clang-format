@@ -1,0 +1,28 @@
+Language: Cpp
+BasedOnStyle: Microsoft
+UseTab: Always
+IndentWidth: 4
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+
+BraceWrapping:
+  AfterClass: true
+  AfterStruct: true
+  AfterFunction: true
+
+  AfterControlStatement: Never
+  BeforeElse: false
+  BeforeCatch: false
+
+
+PointerAlignment: Left
+IndentCaseLabels : true
+
+ColumnLimit: 140
+AllowShortFunctionsOnASingleLine: Inline
+
+BreakConstructorInitializers: BeforeComma
+
+SortIncludes: Never
+
+AlignEscapedNewlines: Left

@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Warrior/WarriorDebugHelper.h"
 #include "Warrior/WarriorGameplayTags.h"
+#include "Warrior/AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Warrior/Components/Input/WarriorInputComponent.h"
 #include "Warrior/DataAssets/Input/DataAsset_InputConfig.h"
 
@@ -37,6 +38,18 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 }
 
+void AWarriorHeroCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	if (WarriorAbilitySystemComponent && WarriorAttributeSet) {
+		FString ASCText =
+			FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *WarriorAbilitySystemComponent->GetOwnerActor()->GetActorLabel(),
+							*WarriorAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
+
+		Debud::Print(TEXT("AB System valid. ") + ASCText, FColor::Green);
+	}
+}
+
 void AWarriorHeroCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -60,8 +73,6 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 void AWarriorHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Debud::Print("Working");
 }
 
 void AWarriorHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)

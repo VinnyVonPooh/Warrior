@@ -15,7 +15,7 @@ class WARRIOR_API UDataAsset_StartUpDataBase : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	virtual void GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InWarriorASCToGive, int32 ApplyLevel = 1);
+	virtual void GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel = 1);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
@@ -25,5 +25,5 @@ protected:
 	TArray<TSubclassOf<UWarriorGameplayAbility>> ReactiveAbilities;
 
 	void GrantAbilities(const TArray<TSubclassOf<UWarriorGameplayAbility>>& InAbilitiesToGive,
-						UWarriorAbilitySystemComponent* InWarriorASCToGive, int32 ApplyLevel = 1);
+						UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel = 1);
 };

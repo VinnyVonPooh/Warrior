@@ -6,6 +6,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Warrior/AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Warrior/AbilitySystem/WarriorAttributeSet.h"
+#include "Warrior/DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 
 AWarriorBaseCharacter::AWarriorBaseCharacter()
 {
@@ -28,6 +29,8 @@ void AWarriorBaseCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 	if (WarriorAbilitySystemComponent) {
 		WarriorAbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+		ensure(!CharacterStartUpData.IsNull());
 	}
 }
 

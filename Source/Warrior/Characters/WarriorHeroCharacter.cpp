@@ -13,6 +13,7 @@
 #include "Warrior/AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Warrior/Components/Input/WarriorInputComponent.h"
 #include "Warrior/DataAssets/Input/DataAsset_InputConfig.h"
+#include "Warrior/DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 
 AWarriorHeroCharacter::AWarriorHeroCharacter()
 {
@@ -41,12 +42,10 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
 void AWarriorHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	if (WarriorAbilitySystemComponent && WarriorAttributeSet) {
-		FString ASCText =
-			FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *WarriorAbilitySystemComponent->GetOwnerActor()->GetActorLabel(),
-							*WarriorAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-
-		Debud::Print(TEXT("AB System valid. ") + ASCText, FColor::Green);
+	if (!CharacterStartUpData.IsNull() ) {
+		if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous()) {
+			LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
+		}
 	}
 }
 

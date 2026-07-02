@@ -8,7 +8,7 @@
 #include "WarriorInputComponent.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class WARRIOR_API UWarriorInputComponent : public UEnhancedInputComponent
@@ -23,7 +23,7 @@ public:
 
 template <class UserObject, typename CallbackFunk>
 void UWarriorInputComponent::BindNativeInputAction(const UDataAsset_InputConfig* InInputConfig, const FGameplayTag& InInputTag,
-	ETriggerEvent TriggerEvent, UserObject* ContextObject, CallbackFunk Funk)
+												   ETriggerEvent TriggerEvent, UserObject* ContextObject, CallbackFunk Funk)
 {
 	check(InInputConfig);
 	if (auto* FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag)) {

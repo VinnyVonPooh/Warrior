@@ -1,6 +1,5 @@
 // Groundhog & Drake All Rights Reserved.
 
-
 #include "WarriorWeaponBase.h"
 
 #include "Components/BoxComponent.h"
@@ -18,4 +17,3 @@ AWarriorWeaponBase::AWarriorWeaponBase()
 	WeaponCollisionBox->SetBoxExtent(FVector(20.f));
 	WeaponCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
-

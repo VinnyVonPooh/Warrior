@@ -1,6 +1,5 @@
 // Groundhog & Drake All Rights Reserved.
 
-
 #include "WarriorBaseCharacter.h"
 
 #include "Components/SkeletalMeshComponent.h"
@@ -33,4 +32,3 @@ void AWarriorBaseCharacter::PossessedBy(AController* NewController)
 		ensure(!CharacterStartUpData.IsNull());
 	}
 }
-

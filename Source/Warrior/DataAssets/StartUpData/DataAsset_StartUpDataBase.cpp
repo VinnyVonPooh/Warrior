@@ -1,6 +1,5 @@
 // Groundhog & Drake All Rights Reserved.
 
-
 #include "DataAsset_StartUpDataBase.h"
 
 #include "Warrior/AbilitySystem/WarriorAbilitySystemComponent.h"
@@ -12,11 +11,10 @@ void UDataAsset_StartUpDataBase::GiveToAbilitySystemComponent(UWarriorAbilitySys
 
 	GrantAbilities(ActivateOnGivenAbilities, InASCToGive, ApplyLevel);
 	GrantAbilities(ReactiveAbilities, InASCToGive, ApplyLevel);
-
 }
 
 void UDataAsset_StartUpDataBase::GrantAbilities(const TArray<TSubclassOf<UWarriorGameplayAbility>>& InAbilitiesToGive,
-	UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
+												UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
 {
 	if (InAbilitiesToGive.IsEmpty()) {
 		return;

@@ -6,7 +6,6 @@
 #include "WarriorBaseAnimInstance.h"
 #include "WarriorCharacterAnimInstance.generated.h"
 
-
 class UCharacterMovementComponent;
 class AWarriorBaseCharacter;
 

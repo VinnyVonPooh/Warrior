@@ -6,7 +6,6 @@
 #include "Warrior/AnimInstances/WarriorCharacterAnimInstance.h"
 #include "WarriorHeroAnimInstance.generated.h"
 
-
 class AWarriorHeroCharacter;
 
 UCLASS()

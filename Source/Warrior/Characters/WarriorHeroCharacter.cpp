@@ -45,7 +45,7 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
 void AWarriorHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	if (!CharacterStartUpData.IsNull() ) {
+	if (!CharacterStartUpData.IsNull()) {
 		if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous()) {
 			LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
 		}
@@ -99,9 +99,8 @@ void AWarriorHeroCharacter::Input_Look(const FInputActionValue& InputActionValue
 	if (LookAxisVector.Y != 0.f) {
 		AddControllerPitchInput(-LookAxisVector.Y);
 	}
-	
+
 	if (LookAxisVector.X != 0.f) {
 		AddControllerYawInput(LookAxisVector.X);
 	}
-
 }

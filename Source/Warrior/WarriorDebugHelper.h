@@ -10,4 +10,4 @@ static void Print(const FString& Msg, const FColor& Color = FColor::MakeRandomCo
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *Msg);
 	}
 }
-}
+} // namespace Debud

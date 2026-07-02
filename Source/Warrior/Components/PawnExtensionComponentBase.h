@@ -27,7 +27,8 @@ protected:
 	template <class T>
 	T* GetOwningController() const
 	{
-		static_assert(TPointerIsConvertibleFromTo<T, AController>::Value, "'T' Template Parameter to GetController must be derived from AController");
+		static_assert(TPointerIsConvertibleFromTo<T, AController>::Value,
+					  "'T' Template Parameter to GetController must be derived from AController");
 		return GetOwningPawn<APawn>()->GetController<T>();
 	}
 };

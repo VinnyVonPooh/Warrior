@@ -1,6 +1,5 @@
 // Groundhog & Drake All Rights Reserved.
 
-
 #include "DataAsset_InputConfig.h"
 
 UInputAction* UDataAsset_InputConfig::FindNativeInputActionByTag(const FGameplayTag& InInputTag) const

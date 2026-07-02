@@ -7,11 +7,10 @@
 #include "WarriorHeroController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class WARRIOR_API AWarriorHeroController : public APlayerController
 {
 	GENERATED_BODY()
-
 };

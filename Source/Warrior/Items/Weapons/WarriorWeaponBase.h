@@ -12,8 +12,8 @@ UCLASS()
 class WARRIOR_API AWarriorWeaponBase : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	AWarriorWeaponBase();
 
 protected:

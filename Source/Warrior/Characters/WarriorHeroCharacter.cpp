@@ -11,6 +11,7 @@
 #include "Warrior/WarriorDebugHelper.h"
 #include "Warrior/WarriorGameplayTags.h"
 #include "Warrior/AbilitySystem/WarriorAbilitySystemComponent.h"
+#include "Warrior/Components/Combat/HeroCombatComponent.h"
 #include "Warrior/Components/Input/WarriorInputComponent.h"
 #include "Warrior/DataAssets/Input/DataAsset_InputConfig.h"
 #include "Warrior/DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
@@ -37,6 +38,8 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f);
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>("HeroCombatComponent");
 }
 
 void AWarriorHeroCharacter::PossessedBy(AController* NewController)

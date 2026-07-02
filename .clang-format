@@ -22,6 +22,7 @@ ColumnLimit: 140
 AllowShortFunctionsOnASingleLine: Inline
 
 BreakConstructorInitializers: BeforeComma
+BreakTemplateDeclarations: Yes
 
 SortIncludes: Never
 

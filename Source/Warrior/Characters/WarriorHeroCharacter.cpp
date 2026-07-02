@@ -70,6 +70,10 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 
 	WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this,
 												 &AWarriorHeroCharacter::Input_Look);
+	
+	WarriorInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &AWarriorHeroCharacter::Input_AbilityInputPressed,
+												  &AWarriorHeroCharacter::Input_AbilityInputReleased);
+
 }
 
 void AWarriorHeroCharacter::BeginPlay()
@@ -103,4 +107,14 @@ void AWarriorHeroCharacter::Input_Look(const FInputActionValue& InputActionValue
 	if (LookAxisVector.X != 0.f) {
 		AddControllerYawInput(LookAxisVector.X);
 	}
+}
+
+void AWarriorHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	WarriorAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void AWarriorHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	WarriorAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
 }

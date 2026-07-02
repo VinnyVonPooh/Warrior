@@ -6,6 +6,7 @@
 #include "WarriorBaseCharacter.h"
 #include "WarriorHeroCharacter.generated.h"
 
+struct FGameplayTag;
 class UHeroCombatComponent;
 struct FInputActionValue;
 class UDataAsset_InputConfig;
@@ -41,6 +42,9 @@ private:
 
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_Look(const FInputActionValue& InputActionValue);
+
+	void Input_AbilityInputPressed(FGameplayTag InInputTag);
+	void Input_AbilityInputReleased(FGameplayTag InInputTag);
 
 public:
 	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }

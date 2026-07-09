@@ -2,6 +2,7 @@
 
 #include "PawnCombatComponent.h"
 
+#include "Components/BoxComponent.h"
 #include "Warrior/WarriorDebugHelper.h"
 #include "Warrior/Items/Weapons/WarriorWeaponBase.h"
 
@@ -34,4 +35,14 @@ AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() co
 		return nullptr;
 	}
 	return GetCharacterCarriedWeaponByTag(CurrentEquippedWeaponTag);
+}
+
+void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+	if (ToggleDamageType == EToggleDamageType::CurrentEquipedWeapon) {
+		auto WeaponToToggle = GetCharacterCurrentEquippedWeapon();
+		check(WeaponToToggle);
+
+		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+	}
 }

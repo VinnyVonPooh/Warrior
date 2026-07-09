@@ -7,7 +7,7 @@
 #include "Warrior/Items/Weapons/WarriorWeaponBase.h"
 
 void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AWarriorWeaponBase* InWeaponToRegister,
-                                                 bool bRegisterAsEquippedWeapon)
+												 bool bRegisterAsEquippedWeapon)
 {
 	check(!CharacterCarriedWeaponMap.Contains(InWeaponTagToRegister));
 	check(InWeaponToRegister);
@@ -46,14 +46,15 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDama
 		auto WeaponToToggle = GetCharacterCurrentEquippedWeapon();
 		check(WeaponToToggle);
 
-		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		if (bShouldEnable) {
+			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		} else {
+			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			OverlappedActors.Empty();
+		}
 	}
 }
 
-void UPawnCombatComponent::OnHitTargetActor(AActor* HitActor)
-{
-}
+void UPawnCombatComponent::OnHitTargetActor(AActor* HitActor) {}
 
-void UPawnCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor)
-{
-}
+void UPawnCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor) {}

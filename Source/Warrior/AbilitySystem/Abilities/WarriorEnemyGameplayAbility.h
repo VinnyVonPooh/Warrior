@@ -6,7 +6,6 @@
 #include "WarriorGameplayAbility.h"
 #include "WarriorEnemyGameplayAbility.generated.h"
 
-
 class UEnemyCombatComponent;
 class AWarriorEnemyCharacter;
 

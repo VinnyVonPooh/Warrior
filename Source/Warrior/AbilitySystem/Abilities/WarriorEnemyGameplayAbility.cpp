@@ -1,6 +1,5 @@
 // Groundhog & Drake All Rights Reserved.
 
-
 #include "WarriorEnemyGameplayAbility.h"
 
 #include "Warrior/Characters/WarriorEnemyCharacter.h"

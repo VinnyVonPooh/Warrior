@@ -4,7 +4,6 @@
 
 #include "Warrior/AbilitySystem/Abilities/WarriorGameplayAbility.h"
 
-
 void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
 	if (!InInputTag.IsValid()) {
@@ -35,7 +34,7 @@ void UWarriorAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FWarr
 	}
 
 	for (const auto& AbilitySet : InDefaultWeaponAbilities) {
-		
+
 		if (!AbilitySet.IsValid()) {
 			continue;
 		}

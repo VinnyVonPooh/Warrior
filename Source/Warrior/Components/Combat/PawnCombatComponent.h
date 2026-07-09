@@ -17,7 +17,6 @@ enum class EToggleDamageType : uint8
 	RightHand
 };
 
-
 UCLASS()
 class WARRIOR_API UPawnCombatComponent : public UPawnExtensionComponentBase
 {

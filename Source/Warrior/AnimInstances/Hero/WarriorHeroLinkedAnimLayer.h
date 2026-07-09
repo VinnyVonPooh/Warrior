@@ -6,7 +6,6 @@
 #include "Warrior/AnimInstances/WarriorBaseAnimInstance.h"
 #include "WarriorHeroLinkedAnimLayer.generated.h"
 
-
 class UWarriorHeroAnimInstance;
 
 UCLASS()

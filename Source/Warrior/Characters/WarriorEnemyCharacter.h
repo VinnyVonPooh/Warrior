@@ -25,7 +25,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	UEnemyCombatComponent* EnemyCombatComponent;
 
-
 private:
 	void InitEnemyStartUpData();
 

@@ -55,13 +55,9 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetWarriorDamageCapture().AttackPowerDef, EvaluateParameters,
 															   SourceAttackPower);
 
-	Debug::Print("SourceAttackPower", SourceAttackPower);
-
 	float TargetDefencePower = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetWarriorDamageCapture().DefencePowerDef, EvaluateParameters,
 															   TargetDefencePower);
-
-	Debug::Print("TargetDefencePower", TargetDefencePower);
 
 	float BaseDamage = 0.f;
 	int32 UsedLightAttackComboCount = 0;
@@ -70,17 +66,14 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 	for (const auto& TagMagnitude : EffectSpec.SetByCallerTagMagnitudes) {
 		if (TagMagnitude.Key.MatchesTagExact(WarriorGameplayTags::Shared_SetByCaller_BaseDamage)) {
 			BaseDamage = TagMagnitude.Value;
-			Debug::Print("BaseDamage", BaseDamage);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(WarriorGameplayTags::Player_SetByCaller_AttackType_Light)) {
 			UsedLightAttackComboCount = TagMagnitude.Value;
-			Debug::Print("UsedLightAttackComboCount", UsedLightAttackComboCount);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(WarriorGameplayTags::Player_SetByCaller_AttackType_Heavy)) {
 			UsedHeavyAttackComboCount = TagMagnitude.Value;
-			Debug::Print("UsedHeavyAttackComboCount", UsedHeavyAttackComboCount);
 		}
 	}
 

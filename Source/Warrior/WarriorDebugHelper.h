@@ -11,7 +11,7 @@ static void Print(const FString& Msg, const FColor& Color = FColor::MakeRandomCo
 	}
 }
 
-static void Print(const FString& FloatTitle, float FloatValueToPrint, int32 InKey = -1, const FColor& Color = FColor::MakeRandomColor())
+static void Print(const FString& FloatTitle, float FloatValueToPrint, const FColor& Color = FColor::MakeRandomColor(), int32 InKey = -1)
 {
 	if (GEngine) {
 		const FString FinalMsg = FloatTitle + TEXT(": ") + FString::SanitizeFloat(FloatValueToPrint);

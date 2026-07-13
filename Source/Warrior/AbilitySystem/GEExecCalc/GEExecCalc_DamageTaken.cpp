@@ -87,7 +87,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		BaseDamage *= DamageIncreasePercent;
 	}
 
-	Debug::Print("ScaledBaseDamage", BaseDamage);
+	//Debug::Print("ScaledBaseDamage", BaseDamage);
 
 	const float FinalDamageDone = BaseDamage * SourceAttackPower / TargetDefencePower;
 	if (FinalDamageDone > 0.f) {
@@ -95,5 +95,5 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 			FGameplayModifierEvaluatedData(GetWarriorDamageCapture().DamageTakenProperty, EGameplayModOp::Override, FinalDamageDone));
 	}
 
-	Debug::Print("FinalDamageDone", FinalDamageDone);
+	//Debug::Print("FinalDamageDone", FinalDamageDone);
 }

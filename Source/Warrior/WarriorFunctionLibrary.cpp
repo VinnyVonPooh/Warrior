@@ -13,7 +13,7 @@ UWarriorAbilitySystemComponent* UWarriorFunctionLibrary::NativeGetWarriorASCFrom
 	return CastChecked<UWarriorAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InActor));
 }
 
-void UWarriorFunctionLibrary::AddGameplayTagToActorIfNine(AActor* InActor, FGameplayTag TagToAdd)
+void UWarriorFunctionLibrary::AddGameplayTagToActorIfNone(AActor* InActor, FGameplayTag TagToAdd)
 {
 	auto* ASC = NativeGetWarriorASCFromActor(InActor);
 	if (!ASC->HasMatchingGameplayTag(TagToAdd)) {

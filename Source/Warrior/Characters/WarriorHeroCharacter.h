@@ -6,6 +6,7 @@
 #include "WarriorBaseCharacter.h"
 #include "WarriorHeroCharacter.generated.h"
 
+class UHeroUIComponent;
 struct FGameplayTag;
 class UHeroCombatComponent;
 struct FInputActionValue;
@@ -22,6 +23,7 @@ public:
 	AWarriorHeroCharacter();
 
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
 
 protected:
 	virtual void PossessedBy(AController* NewController) override;
@@ -37,6 +39,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	UHeroCombatComponent* HeroCombatComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI", meta = (AllowPrivateAccess = "true"))
+	UHeroUIComponent* HeroUIComponent;
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData", meta = (AllowPrivateAccess = "true"))

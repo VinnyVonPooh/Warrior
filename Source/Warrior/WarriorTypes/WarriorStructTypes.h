@@ -4,6 +4,7 @@
 #include "Templates/SubclassOf.h"
 #include "GameplayTagContainer.h"
 #include "ScalableFloat.h"
+#include "UObject/SoftObjectPtr.h"
 #include "WarriorStructTypes.generated.h"
 
 class UWarriorHeroGameplayAbility;
@@ -40,4 +41,7 @@ struct FWarriorHeroWeaponData
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftObjectPtr<UTexture2D> SoftWeaponIconTexture;
 };

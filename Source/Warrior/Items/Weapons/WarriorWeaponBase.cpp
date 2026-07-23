@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Warrior/WarriorDebugHelper.h"
+#include "Warrior/WarriorFunctionLibrary.h"
 
 AWarriorWeaponBase::AWarriorWeaponBase()
 {
@@ -31,7 +32,7 @@ void AWarriorWeaponBase::OnCollisionBoxBeginOverlap(UPrimitiveComponent* Overlap
 	check(WeaponOwningPawn);
 
 	if (auto* HitPawn = Cast<APawn>(OtherActor)) {
-		if (WeaponOwningPawn != HitPawn) {
+		if (UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn)) {
 			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
 	}
@@ -44,7 +45,7 @@ void AWarriorWeaponBase::OnCollisionBoxEndOverlap(UPrimitiveComponent* Overlappe
 	check(WeaponOwningPawn);
 
 	if (auto* HitPawn = Cast<APawn>(OtherActor)) {
-		if (WeaponOwningPawn != HitPawn) {
+		if (UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn)) {
 			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
 		}
 	}

@@ -35,8 +35,3 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), WarriorGameplayTags::Shared_Event_MeleeHit, Data);
 	}
 }
-
-void UEnemyCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor)
-{
-	Super::OnWeaponPulledFromTargetActor(InteractedActor);
-}

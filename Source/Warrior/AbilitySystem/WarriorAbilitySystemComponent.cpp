@@ -2,6 +2,7 @@
 
 #include "WarriorAbilitySystemComponent.h"
 
+#include "Warrior/WarriorGameplayTags.h"
 #include "Warrior/AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
 
 void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
@@ -20,8 +21,13 @@ void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& I
 
 void UWarriorAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
-	if (!InInputTag.IsValid()) {
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(WarriorGameplayTags::InputTag_MustBeHeld)) {
 		return;
+	}
+	for (const auto& AbilitySpec : GetActivatableAbilities()) {
+		if (AbilitySpec.DynamicAbilityTags.HasTag(InInputTag) && AbilitySpec.IsActive()) {
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
 	}
 }
 
@@ -68,11 +74,11 @@ bool UWarriorAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag Abilit
 
 	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
 	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
-	
+
 	if (!FoundAbilitySpecs.IsEmpty()) {
 		const int32 RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
 		auto* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
-		
+
 		check(SpecToActivate);
 		if (!SpecToActivate->IsActive()) {
 			return TryActivateAbility(SpecToActivate->Handle);

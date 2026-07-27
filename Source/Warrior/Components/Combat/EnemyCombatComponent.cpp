@@ -30,8 +30,7 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	Data.Target = HitActor;
 
 	if (bIsValidBlock) {
-		//TODO:
-		// block
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), WarriorGameplayTags ::Player_Event_SuccessfulBlock, Data);
 	} else {
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), WarriorGameplayTags::Shared_Event_MeleeHit, Data);
 	}

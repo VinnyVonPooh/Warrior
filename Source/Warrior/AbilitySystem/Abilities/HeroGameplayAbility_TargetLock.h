@@ -43,11 +43,15 @@ private:
 	UPROPERTY()
 	UWarriorWidgetBase* DrawnTargetLockWidget;
 
+	UPROPERTY()
+	FVector2D TargetLockWidgetSize = FVector2D::ZeroVector;
+
 	void TryLockOnTarget();
 	void GetAvailableActorsToLock();
 	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
 
 	void DrawTargetLockWidget();
+	void SetTargetLockWidgetPosition();
 
 	void CancelTargetLockAbility();
 	void CleanUp();

@@ -7,6 +7,8 @@
 #include "HeroGameplayAbility_TargetLock.generated.h"
 
 
+class UWarriorWidgetBase;
+
 UCLASS()
 class WARRIOR_API UHeroGameplayAbility_TargetLock : public UWarriorHeroGameplayAbility
 {
@@ -29,15 +31,24 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
 	bool bShowPersistentDebugShape = false;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
+	TSubclassOf<UWarriorWidgetBase> TargetLockWidgetClass;
+
 	UPROPERTY()
 	TArray<AActor*> AvailableActorsToLock;
 
 	UPROPERTY()
 	AActor* CurrentLockedActor;
 
+	UPROPERTY()
+	UWarriorWidgetBase* DrawnTargetLockWidget;
+
 	void TryLockOnTarget();
 	void GetAvailableActorsToLock();
 	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
+
+	void DrawTargetLockWidget();
+
 	void CancelTargetLockAbility();
 	void CleanUp();
 };

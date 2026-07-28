@@ -32,6 +32,12 @@ private:
 	UPROPERTY()
 	TArray<AActor*> AvailableActorsToLock;
 
+	UPROPERTY()
+	AActor* CurrentLockedActor;
+
 	void TryLockOnTarget();
 	void GetAvailableActorsToLock();
+	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
+	void CancelTargetLockAbility();
+	void CleanUp();
 };

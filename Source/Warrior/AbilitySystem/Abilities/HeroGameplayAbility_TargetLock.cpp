@@ -53,8 +53,11 @@ void UHeroGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
 		!UWarriorFunctionLibrary::NativeDoesActorHaveTag(GetHeroCharacterFromActorInfo(), WarriorGameplayTags::Player_Status_Blocking);
 
 	if (bShouldOverrideRotation) {
-		const FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(GetHeroCharacterFromActorInfo()->GetActorLocation(),
+		FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(GetHeroCharacterFromActorInfo()->GetActorLocation(),
 																		  CurrentLockedActor->GetActorLocation());
+
+		LookAtRot -= FRotator(TargetLockCameraOffsetDistance, 0.f, 0.f);
+
 		const FRotator CurrentControlRot = GetHeroControllerFromActorInfo()->GetControlRotation();
 		const FRotator TargetRot = FMath::RInterpTo(CurrentControlRot, LookAtRot, DeltaTime, TargetLockRotationInterpSpeed);
 		GetHeroControllerFromActorInfo()->SetControlRotation(FRotator(TargetRot.Pitch, TargetRot.Yaw, 0.f));
@@ -74,17 +77,13 @@ void UHeroGameplayAbility_TargetLock::SwitchTarget(const FGameplayTag& InSwitchD
 
 	if (InSwitchDirectionTag == WarriorGameplayTags::Player_Event_SwitchTarget_Left) {
 		NewTargetToLock = GetNearestTargetFromAvailableActors(ActorsOnLeft);
-		Debug::Print("Left");
 	} else {
 		NewTargetToLock = GetNearestTargetFromAvailableActors(ActorsOnRight);
-		Debug::Print("Right");
 	}
 
 	if (NewTargetToLock) {
 		CurrentLockedActor = NewTargetToLock;
 	}
-
-	
 }
 
 void UHeroGameplayAbility_TargetLock::TryLockOnTarget()

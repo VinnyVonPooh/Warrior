@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Warrior/WarriorDebugHelper.h"
 #include "Warrior/WarriorFunctionLibrary.h"
 #include "Warrior/WarriorGameplayTags.h"
 #include "Warrior/Characters/WarriorHeroCharacter.h"
@@ -61,6 +62,31 @@ void UHeroGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
 	}
 }
 
+void UHeroGameplayAbility_TargetLock::SwitchTarget(const FGameplayTag& InSwitchDirectionTag)
+{
+	GetAvailableActorsToLock();
+
+	TArray<AActor*> ActorsOnLeft;
+	TArray<AActor*> ActorsOnRight;
+	GetAvailableActorsAroundTarget(ActorsOnLeft, ActorsOnRight);
+
+	AActor* NewTargetToLock = nullptr;
+
+	if (InSwitchDirectionTag == WarriorGameplayTags::Player_Event_SwitchTarget_Left) {
+		NewTargetToLock = GetNearestTargetFromAvailableActors(ActorsOnLeft);
+		Debug::Print("Left");
+	} else {
+		NewTargetToLock = GetNearestTargetFromAvailableActors(ActorsOnRight);
+		Debug::Print("Right");
+	}
+
+	if (NewTargetToLock) {
+		CurrentLockedActor = NewTargetToLock;
+	}
+
+	
+}
+
 void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 {
 	GetAvailableActorsToLock();
@@ -81,6 +107,8 @@ void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 
 void UHeroGameplayAbility_TargetLock::GetAvailableActorsToLock()
 {
+	AvailableActorsToLock.Empty();
+
 	TArray<FHitResult> BoxTraceHits;
 
 	const auto* HeroCharacter = GetHeroCharacterFromActorInfo();
@@ -110,6 +138,31 @@ AActor* UHeroGameplayAbility_TargetLock::GetNearestTargetFromAvailableActors(con
 {
 	float ClosestDistance = 0.f;
 	return UGameplayStatics::FindNearestActor(GetHeroCharacterFromActorInfo()->GetActorLocation(), InAvailableActors, ClosestDistance);
+}
+
+void UHeroGameplayAbility_TargetLock::GetAvailableActorsAroundTarget(TArray<AActor*>& OutActorsOnLeft, TArray<AActor*>& OutActorsOnRight)
+{
+	if (!CurrentLockedActor || AvailableActorsToLock.IsEmpty()) {
+		CancelTargetLockAbility();
+		return;
+	}
+
+	const FVector PlayerLocation = GetHeroCharacterFromActorInfo()->GetActorLocation();
+	const FVector PlayerToCurrentNormalized = (CurrentLockedActor->GetActorLocation() - PlayerLocation).GetSafeNormal();
+
+	for (AActor* AvailableActor : AvailableActorsToLock) {
+		if (!AvailableActor || AvailableActor == CurrentLockedActor) {
+			continue;
+		}
+		const FVector PlayerToAvailableNormalized = (AvailableActor->GetActorLocation() - PlayerLocation).GetSafeNormal();
+		const FVector CrossResult = FVector::CrossProduct(PlayerToCurrentNormalized, PlayerToAvailableNormalized);
+
+		if (CrossResult.Z > 0.f) {
+			OutActorsOnRight.AddUnique(AvailableActor);
+		} else {
+			OutActorsOnLeft.AddUnique(AvailableActor);
+		}
+	}
 }
 
 void UHeroGameplayAbility_TargetLock::DrawTargetLockWidget()

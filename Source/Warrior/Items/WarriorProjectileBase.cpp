@@ -70,7 +70,7 @@ void AWarriorProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent, 
 	if (bIsValidBlock) {
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitPawn, WarriorGameplayTags ::Player_Event_SuccessfulBlock, Data);
 	} else {
-		//UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, WarriorGameplayTags::Shared_Event_MeleeHit, Data);
+		HandleApplyProjectileDamage(HitPawn, Data);
 	}
 
 	Destroy();
@@ -79,5 +79,14 @@ void AWarriorProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent, 
 void AWarriorProjectileBase::OnProjectileBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+}
+
+void AWarriorProjectileBase::HandleApplyProjectileDamage(APawn* InHitPawn, const FGameplayEventData& InPayload)
+{
+	check(ProjectileDamageEffectSpecHandle.IsValid());
+	const bool bWasApplied = UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(GetInstigator(), InHitPawn, ProjectileDamageEffectSpecHandle);
+	if (bWasApplied) {
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(InHitPawn, WarriorGameplayTags ::Shared_Event_HitReact, InPayload);
+	}
 }
 

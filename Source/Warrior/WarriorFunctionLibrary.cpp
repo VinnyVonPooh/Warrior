@@ -96,7 +96,7 @@ FGameplayTag UWarriorFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAtta
 
 	if (OutAngleDifference >= -45.f && OutAngleDifference <= 45.f) {
 		return WarriorGameplayTags::Shared_Status_HitReact_Front;
-	} else if (OutAngleDifference < -45.f && OutAngleDifference >=-135.f) {
+	} else if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f) {
 		return WarriorGameplayTags::Shared_Status_HitReact_Left;
 	} else if (OutAngleDifference < -135.f || OutAngleDifference > 135.f) {
 		return WarriorGameplayTags::Shared_Status_HitReact_Back;
@@ -113,4 +113,14 @@ bool UWarriorFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefende
 	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector());
 
 	return DotResult < -0.1f;
+}
+
+bool UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor,
+																		 const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UWarriorAbilitySystemComponent* SourceASC = NativeGetWarriorASCFromActor(InInstigator);
+	UWarriorAbilitySystemComponent* TargetASC = NativeGetWarriorASCFromActor(InTargetActor);
+
+	auto ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }

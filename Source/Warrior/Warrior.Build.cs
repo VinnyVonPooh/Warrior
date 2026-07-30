@@ -21,7 +21,7 @@ public class Warrior : ModuleRules
 			"AnimGraphRuntime"
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "AIModule", "MotionWarping" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "AIModule", "MotionWarping", "Niagara"});
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

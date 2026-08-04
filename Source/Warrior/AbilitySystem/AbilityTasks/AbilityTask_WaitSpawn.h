@@ -21,7 +21,7 @@ public:
 					  BlueprintInternalUseOnly = "true", NumToSpawn = "1", RandomSpawnRadius = "200"))
 	static UAbilityTask_WaitSpawn* WaitSpawnEnemies(UGameplayAbility* OwningAbility, FGameplayTag EventTag,
 													TSoftClassPtr<AWarriorEnemyCharacter> SoftEnemyClassToSpawn, int NumToSpawn,
-													const FVector& SpawnOrigin, float RandomSpawnRadius, const FRotator& SpawnRotation);
+													const FVector& SpawnOrigin, float RandomSpawnRadius);
 
 	UPROPERTY(BlueprintAssignable)
 	FWaitSpawnEnemiesDelegate OnSpawnFinished;
@@ -38,7 +38,6 @@ private:
 	int CachedNumToSpawn;
 	FVector CachedSpawnOrigin;
 	float CachedRandomSpawnRadius;
-	FRotator CachedSpawnRotation;
 
 	FDelegateHandle DelegateHandle;
 

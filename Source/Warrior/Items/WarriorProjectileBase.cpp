@@ -1,6 +1,5 @@
 // Groundhog & Drake All Rights Reserved.
 
-
 #include "WarriorProjectileBase.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
@@ -47,7 +46,7 @@ void AWarriorProjectileBase::BeginPlay()
 }
 
 void AWarriorProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	FVector NormalImpulse, const FHitResult& Hit)
+											 FVector NormalImpulse, const FHitResult& Hit)
 {
 	BP_OnSpawnProjectileHitFX(Hit.ImpactPoint);
 
@@ -77,16 +76,33 @@ void AWarriorProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent, 
 }
 
 void AWarriorProjectileBase::OnProjectileBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+													  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+													  const FHitResult& SweepResult)
 {
+	if (OverlappedActors.Contains(OtherActor)) {
+		return;
+	}
+	OverlappedActors.AddUnique(OtherActor);
+
+	if (auto* HitPawn = Cast<APawn>(OtherActor)) {
+
+		FGameplayEventData Data;
+		Data.Instigator = GetInstigator();
+		Data.Target = HitPawn;
+
+		if (UWarriorFunctionLibrary::IsTargetPawnHostile(GetInstigator(), HitPawn)) {
+			
+			HandleApplyProjectileDamage(HitPawn, Data);
+		}
+	}
 }
 
 void AWarriorProjectileBase::HandleApplyProjectileDamage(APawn* InHitPawn, const FGameplayEventData& InPayload)
 {
 	check(ProjectileDamageEffectSpecHandle.IsValid());
-	const bool bWasApplied = UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(GetInstigator(), InHitPawn, ProjectileDamageEffectSpecHandle);
+	const bool bWasApplied =
+		UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(GetInstigator(), InHitPawn, ProjectileDamageEffectSpecHandle);
 	if (bWasApplied) {
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(InHitPawn, WarriorGameplayTags ::Shared_Event_HitReact, InPayload);
 	}
 }
-

@@ -7,8 +7,12 @@
 #include "HeroUIComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEquippedWeaponChangedDelegate, TSoftObjectPtr<UTexture2D>, SoftWeaponIcon);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAbilityIconSlotUpdatedDelegate, FGameplayTag, AbilityInpytTag,
 											 TSoftObjectPtr<UMaterialInterface>, SoftAbilityIconMaterial);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAbilityCooldownBeginDelegate, FGameplayTag, AbilityInpytTag, float, TotalCooldownTime,
+											   float, RemainingCooldownTime);
 
 UCLASS()
 class WARRIOR_API UHeroUIComponent : public UPawnUIComponent
@@ -24,4 +28,7 @@ public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable)
 	FOnAbilityIconSlotUpdatedDelegate OnAbilityIconSlotUpdated;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
+	FOnAbilityCooldownBeginDelegate OnAbilityCooldownBegin;
 };

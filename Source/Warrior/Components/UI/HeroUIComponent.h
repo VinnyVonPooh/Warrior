@@ -6,8 +6,9 @@
 #include "PawnUIComponent.h"
 #include "HeroUIComponent.generated.h"
 
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEquippedWeaponChangedDelegate, TSoftObjectPtr<UTexture2D>, SoftWeaponIcon);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAbilityIconSlotUpdatedDelegate, FGameplayTag, AbilityInpytTag,
+											 TSoftObjectPtr<UMaterialInterface>, SoftAbilityIconMaterial);
 
 UCLASS()
 class WARRIOR_API UHeroUIComponent : public UPawnUIComponent
@@ -20,4 +21,7 @@ public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable)
 	FOnEquippedWeaponChangedDelegate OnEquippedWeaponChanged;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
+	FOnAbilityIconSlotUpdatedDelegate OnAbilityIconSlotUpdated;
 };

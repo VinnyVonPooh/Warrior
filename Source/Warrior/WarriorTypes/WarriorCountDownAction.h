@@ -7,13 +7,13 @@
 #include "WarriorEnumTypes.h"
 #include "Engine/LatentActionManager.h"
 
-class WarriorCountDownAction : public FPendingLatentAction
+class FWarriorCountDownAction : public FPendingLatentAction
 {
 public:
-	WarriorCountDownAction(float InTotalCountTime, float InUpdateInterval, float& InOutRemainingTime,
+	FWarriorCountDownAction(float InTotalCountDownTime, float InUpdateInterval, float& InOutRemainingTime,
 						   EWarriorCountDownActionOutput& InCountDownOutput, const FLatentActionInfo& FLatentInfo)
 		: bNeedToCancel(false)
-		, TotalCountDownTime(InTotalCountTime)
+		, TotalCountDownTime(InTotalCountDownTime)
 		, UpdateInterval(InUpdateInterval)
 		, OutRemainingTime(InOutRemainingTime)
 		, CountDownOutput(InCountDownOutput)
@@ -23,8 +23,9 @@ public:
 		, ElapsedInterval(0.f)
 		, ElapsedTimeSinceStart(0.f)
 	{
-		
 	}
+
+	void CancelAction();
 
 private:
 	bool bNeedToCancel;

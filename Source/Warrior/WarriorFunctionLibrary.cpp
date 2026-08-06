@@ -6,9 +6,11 @@
 #include "GenericTeamAgentInterface.h"
 #include "WarriorGameplayTags.h"
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
+#include "Engine/Engine.h"
 #include "GameFramework/Pawn.h"
 #include "Interfaces/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "WarriorTypes/WarriorCountDownAction.h"
 
 UWarriorAbilitySystemComponent* UWarriorFunctionLibrary::NativeGetWarriorASCFromActor(AActor* InActor)
 {
@@ -130,4 +132,29 @@ void UWarriorFunctionLibrary::CountDown(const UObject* WorldContextObject, float
 										UPARAM(DisplayName = "Output") EWarriorCountDownActionOutput& CountDownOutput,
 										FLatentActionInfo LatentInfo)
 {
+	UWorld* World = nullptr;
+
+	if (GEngine) {
+		World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+	}
+
+	if (!World) {
+		return;
+	}
+	auto& LatentActionManager = World->GetLatentActionManager();
+	auto* FoundAction = LatentActionManager.FindExistingAction<FWarriorCountDownAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+
+	if (CountDownInput == EWarriorCountDownActionInput::Start) {
+		if (!FoundAction) {
+			LatentActionManager.AddNewAction(
+				LatentInfo.CallbackTarget, LatentInfo.UUID,
+				new FWarriorCountDownAction(TotalTime, UpdateInterval, OutRemainingTime, CountDownOutput, LatentInfo));
+		}
+	}
+
+	if (CountDownInput== EWarriorCountDownActionInput::Cancel) {
+		if (FoundAction) {
+			FoundAction->CancelAction();
+		}
+	}
 }

@@ -3,3 +3,7 @@
 
 #include "WarriorCountDownAction.h"
 
+void FWarriorCountDownAction::CancelAction()
+{
+	bNeedToCancel = true;
+}

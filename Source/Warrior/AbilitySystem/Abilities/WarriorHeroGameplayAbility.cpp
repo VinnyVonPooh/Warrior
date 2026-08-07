@@ -30,6 +30,11 @@ UHeroCombatComponent* UWarriorHeroGameplayAbility::GetHeroCombatComponentFromAct
 	return GetHeroCharacterFromActorInfo()->GetHeroCombatComponent();
 }
 
+UHeroUIComponent* UWarriorHeroGameplayAbility::GetHeroUIComponentFromActorInfo()
+{
+	return GetHeroCharacterFromActorInfo()->GetHeroUIComponent();
+}
+
 FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,
 																					  float InWeaponBaseDamage,
 																					  FGameplayTag InCurrentAttackTypeTag,
@@ -52,13 +57,13 @@ FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecH
 }
 
 bool UWarriorHeroGameplayAbility::GetAbilityRemainingCooldownByTag(FGameplayTag InCooldownTag, float& TotalCooldownTime,
-	float& RemainingCooldownTime)
+																   float& RemainingCooldownTime)
 {
 	check(InCooldownTag.IsValid());
 
 	auto CooldownQuery = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(InCooldownTag.GetSingleTagContainer());
 	auto TimeRemainingAndDuration = GetAbilitySystemComponentFromActorInfo()->GetActiveEffectsTimeRemainingAndDuration(CooldownQuery);
-	
+
 	if (!TimeRemainingAndDuration.IsEmpty()) {
 		RemainingCooldownTime = TimeRemainingAndDuration[0].Key;
 		TotalCooldownTime = TimeRemainingAndDuration[0].Value;

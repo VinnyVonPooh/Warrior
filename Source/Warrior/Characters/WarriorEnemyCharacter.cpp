@@ -11,6 +11,7 @@
 #include "Warrior/Components/Combat/EnemyCombatComponent.h"
 #include "Warrior/Components/UI/EnemyUIComponent.h"
 #include "Warrior/DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
+#include "Warrior/GameModes/WarriorBaseGameMode.h"
 #include "Warrior/Widgets/WarriorWidgetBase.h"
 
 AWarriorEnemyCharacter::AWarriorEnemyCharacter()
@@ -107,6 +108,27 @@ void AWarriorEnemyCharacter::InitEnemyStartUpData()
 	if (CharacterStartUpData.IsNull()) {
 		return;
 	}
+
+	int32 AbilityApplyLevel = 1;
+	if (auto* BaseGameMode = GetWorld()->GetAuthGameMode<AWarriorBaseGameMode>()) {
+		switch (BaseGameMode->GetCurrentGameDifficulty()) {
+			case EWarriorGameDifficulty::Easy:
+				AbilityApplyLevel = 1;
+				break;
+			case EWarriorGameDifficulty::Normal:
+				AbilityApplyLevel = 2;
+				break;
+			case EWarriorGameDifficulty::Hard:
+				AbilityApplyLevel = 3;
+				break;
+			case EWarriorGameDifficulty::VeryHard:
+				AbilityApplyLevel = 4;
+				break;
+			default:
+				break;
+		}
+	}
+
 	UAssetManager::GetStreamableManager().RequestAsyncLoad(
 		CharacterStartUpData.ToSoftObjectPath(), FStreamableDelegate::CreateLambda([this]() {
 			if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous()) {

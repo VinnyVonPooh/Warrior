@@ -130,9 +130,9 @@ void AWarriorEnemyCharacter::InitEnemyStartUpData()
 	}
 
 	UAssetManager::GetStreamableManager().RequestAsyncLoad(
-		CharacterStartUpData.ToSoftObjectPath(), FStreamableDelegate::CreateLambda([this]() {
+		CharacterStartUpData.ToSoftObjectPath(), FStreamableDelegate::CreateLambda([this, AbilityApplyLevel]() {
 			if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous()) {
-				LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
+				LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent, AbilityApplyLevel);
 			}
 		}));
 }
